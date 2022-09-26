@@ -10,6 +10,9 @@ chmod 600 /home/runner/.ssh/github_actions
 ssh-agent -a $INPUT_SSH_AUTH_SOCK > /dev/null
 ssh-add /home/runner/.ssh/github_actions
 
+# In case we run this multiple times per action, make sure checkout dir does not exist
+rm -Rf ${INPUT_MANIFEST_NAME}
+
 git config --global --add url."git@${INPUT_GHES_HOST}:".insteadOf "https://${INPUT_GHES_HOST}/"
 git config --global user.name ${INPUT_MANIFEST_NAME}
 git config --global user.email ${INPUT_MANIFEST_NAME}@${INPUT_GHES_HOST}
